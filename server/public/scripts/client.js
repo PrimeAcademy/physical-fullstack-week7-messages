@@ -9,7 +9,7 @@ function onReady(){
 function getMessages(){
    $.ajax({
        type: 'GET',
-       url: '/messages'
+       url: '/messages' // "route", "endpoint"
    }).then( function( response ){
        let el = $( '#messagesOut' );
        el.empty();
@@ -17,7 +17,7 @@ function getMessages(){
            let thing = response[ i ];
            el.append( `<li class="messageLine" data-index="${i}">
                         <i>${thing.user}</i>: ${thing.message}
-                       </li>`)
+                       </li>`);
        } // end for
    }).catch( function( err ){
        alert( 'Unable to get messages. Try again later.' );
@@ -27,11 +27,12 @@ function getMessages(){
 
 function sendMessage(event){
    console.log( 'in sendMessage' );
-   event.preventDefault();
+   event.preventDefault(); // tied to the "form" element
    let objectToSend = {
        user: $( '#nameIn' ).val(),
        message: $( '#messageIn' ).val()
    } //end objectToSend
+
    $.ajax({
        type: 'POST',
        url: '/messages',

@@ -1,14 +1,14 @@
-const express = require( 'express' );
-const bodyParser = require( 'body-parser' );
+const express = require( 'express' );//sets express to require both express &&
+const bodyParser = require( 'body-parser' );//body parser
  
-const app = express();
-app.use( express.static( 'server/public' ) );
-app.use( bodyParser.urlencoded( { extended: true } ) );
+const app = express();//app is the function express
+app.use( express.static( 'server/public' ) );//serve up files with express
+app.use( bodyParser.urlencoded( { extended: true } ) );//app express uses bodyParser to 
  
-let messages = [];
+let messages = [];//emptyArray
  
-const port = 5000;
-app.listen( port, ()=>{
+const port = 5000;//sets port
+app.listen( port, ()=>{//
    console.log( 'server up on:', port );
 }) //end server up
  
@@ -21,11 +21,17 @@ app.delete( '/messages/:index', ( req, res )=>{
 app.get( '/messages', ( req, res )=>{
    console.log( 'in /messages GET' );
    res.send( messages );
-}) // end essages
+}) // end messages
  
 app.post( '/messages', ( req, res )=>{
    console.log( 'in /messages POST:', req.body );
-   messages.push( req.body );
+   /* req.body is:
+   {
+      user: 'kris',
+      message: 'hello!'
+   }
+   */
+   messages.push( req.body );  
    res.sendStatus( 200 );
 }) // end messages POST
 
