@@ -14,16 +14,21 @@ app.listen( port, ()=>{//
  
 // routes
 app.delete( '/messages/:index', ( req, res )=>{
+   debugger;
    console.log( 'in /messages delete:', req.params.index );
+   debugger;
    res.sendStatus( 200 );
 }) //end delete
  
 app.get( '/messages', ( req, res )=>{
+   debugger;
    console.log( 'in /messages GET' );
+   debugger;
    res.send( messages );
 }) // end messages
  
 app.post( '/messages', ( req, res )=>{
+   debugger;
    console.log( 'in /messages POST:', req.body );
    /* req.body is:
    {
@@ -31,7 +36,8 @@ app.post( '/messages', ( req, res )=>{
       message: 'hello!'
    }
    */
-   messages.push( req.body );  
+   messages.push( req.body ); 
+   debugger; 
    res.sendStatus( 200 );
 }) // end messages POST
 
