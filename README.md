@@ -9,7 +9,7 @@ This will guide you through code execution!
 2. Navigate to localhost:5000
 3. Open your browser console
 4. Start server with debugger, *NOT* npm.
-   1. click on debugIcon ![image of  debugger](./debugIcon.png  =100x100)
+   1. click on debugIcon ![image of  debugger]('./debugIcon.png)
    2. At the top, click the green Play button by RUN (Launch Program)
 5. Refresh Browser and Start tracing the code!
    
