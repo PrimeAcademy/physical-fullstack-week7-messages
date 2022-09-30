@@ -8,7 +8,7 @@ function onReady(){
  
 function getMessages(){
    $.ajax({
-       type: 'GET',
+       method: 'GET',
        url: '/messages' // "route", "endpoint"
    }).then( function( response ){
        let el = $( '#messagesOut' );
@@ -34,7 +34,7 @@ function sendMessage(event){
    } //end objectToSend
 
    $.ajax({
-       type: 'POST',
+       method: 'POST',
        url: '/messages',
        data: objectToSend
    }).then( function( response ){
@@ -50,7 +50,7 @@ function sendMessage(event){
 function deleteMessage(){
    let index = $( this ).data( 'index' );
    $.ajax({
-       type: 'DELETE',
+       method: 'DELETE',
        url: '/messages/' + index
    }).then( function( response ){
        getMessages();
