@@ -11,18 +11,26 @@ function getMessages(){
        method: 'GET',
        url: '/messages' // "route", "endpoint"
    }).then( function( response ){
-       let el = $( '#messagesOut' );
-       el.empty();
-       for( let i=0; i<response.length; i++){
-           let thing = response[ i ];
-           el.append( `<li class="messageLine" data-index="${i}">
-                        <i>${thing.user}</i>: ${thing.message}
-                       </li>`);
-       } // end for
+      render(response)
    }).catch( function( err ){
        alert( 'Unable to get messages. Try again later.' );
        console.log( err );
    })
+}
+
+function render (messages) {
+    let el = $( '#messagesOut' );
+    el.empty();
+    
+    for( let i = 0; i < messages.length; i++){
+        let thing = messages[ i ];
+         el.append( 
+           `<li class="messageLine" data-index="${i}">
+               <i>${thing.user}</i>: ${thing.message}
+           </li>` 
+        );
+    } // end for loop
+
 }
 
 function sendMessage(event){
@@ -47,6 +55,8 @@ function sendMessage(event){
    }) // end AJAX
 }
  
+
+// This is a stretch goal
 function deleteMessage(){
    let index = $( this ).data( 'index' );
    $.ajax({
