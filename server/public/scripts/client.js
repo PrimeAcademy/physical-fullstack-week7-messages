@@ -1,5 +1,7 @@
 $( document ).ready( onReady );
  
+let messages = [];
+
 function onReady(){
    $( '#sendMessageButton' ).on( 'click', sendMessage );
    $( '#messagesOut' ).on( 'click', '.messageLine', deleteMessage );
@@ -11,26 +13,24 @@ function getMessages(){
        method: 'GET',
        url: '/messages' // "route", "endpoint"
    }).then( function( response ){
-      render(response)
+       messages = response; // set state
+       render();
    }).catch( function( err ){
        alert( 'Unable to get messages. Try again later.' );
        console.log( err );
    })
 }
 
-function render (messages) {
-    let el = $( '#messagesOut' );
-    el.empty();
-    
-    for( let i = 0; i < messages.length; i++){
-        let thing = messages[ i ];
-         el.append( 
-           `<li class="messageLine" data-index="${i}">
-               <i>${thing.user}</i>: ${thing.message}
-           </li>` 
-        );
-    } // end for loop
-
+function render() {
+  let el = $('#messagesOut');
+  el.empty();
+  // render messages to the DOM
+  for (let i = 0; i < messages.length; i++) {
+    let item = messages[i];
+    el.append(`<li class="messageLine" data-index="${i}">
+                        <i>${item.user}</i>: ${item.message}
+                       </li>`);
+  } // end for
 }
 
 function sendMessage(event){
@@ -55,8 +55,7 @@ function sendMessage(event){
    }) // end AJAX
 }
  
-
-// This is a stretch goal
+// stretch goal in Weekend Challenge
 function deleteMessage(){
    let index = $( this ).data( 'index' );
    $.ajax({
