@@ -1,5 +1,7 @@
+// client.js
+
 $( document ).ready( onReady );
- 
+
 let messages = [];
 
 function onReady(){
@@ -11,7 +13,7 @@ function onReady(){
 function getMessages(){
    $.ajax({
        method: 'GET',
-       url: '/messages' // "route", "endpoint"
+       url: '/messages' 
    }).then( function( response ){
        messages = response; // set state
        render();
@@ -27,19 +29,23 @@ function render() {
   // render messages to the DOM
   for (let i = 0; i < messages.length; i++) {
     let item = messages[i];
-    el.append(`<li class="messageLine" data-index="${i}">
-                        <i>${item.user}</i>: ${item.message}
-                       </li>`);
-  } // end for
+    el.append(`
+            <li class="messageLine" data-index="${i}">
+                <i>${item.user}</i>: ${item.message}
+            </li>
+            `
+            );
+  } 
 }
 
 function sendMessage(event){
    console.log( 'in sendMessage' );
    event.preventDefault(); // tied to the "form" element
+   
    let objectToSend = {
        user: $( '#nameIn' ).val(),
        message: $( '#messageIn' ).val()
-   } //end objectToSend
+   };
 
    $.ajax({
        method: 'POST',
