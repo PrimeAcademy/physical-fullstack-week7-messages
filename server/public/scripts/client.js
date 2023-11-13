@@ -1,76 +1,72 @@
 // client.js
 
-$( document ).ready( onReady );
 
 let messages = [];
+getMessages();
 
-function onReady(){
-   $( '#sendMessageButton' ).on( 'click', sendMessage );
-   $( '#messagesOut' ).on( 'click', '.messageLine', deleteMessage );
-   getMessages();
-}
- 
-function getMessages(){
-   $.ajax({
-       method: 'GET',
-       url: '/messages' 
-   }).then( function( response ){
-       messages = response; // set state
-       render();
-   }).catch( function( err ){
-       alert( 'Unable to get messages. Try again later.' );
-       console.log( err );
-   })
+function getMessages() {
+    axios({
+        method: 'GET',
+        url: '/messages'
+    }).then(function (response) {
+        messages = response.data; // set state
+        render();
+    }).catch(function (err) {
+        alert('Unable to get messages. Try again later.');
+        console.log(err);
+    })
 }
 
 function render() {
-  let el = $('#messagesOut');
-  el.empty();
-  // render messages to the DOM
-  for (let i = 0; i < messages.length; i++) {
-    let item = messages[i];
-    el.append(`
-            <li class="messageLine" data-index="${i}">
-                <i>${item.user}</i>: ${item.message}
+    let el = document.getElementById('messagesOut');
+    el.innerHTML = '';
+    // render messages to the DOM
+    for (let i = 0; i < messages.length; i++) {
+        let item = messages[i];
+        el.innerHTML += (`
+            <li class="messageLine" data-index="${i}" onclick=(deleteMessage(event))>
+                <b>${item.user}</b>:
+                <div>"${item.message}"</div>
             </li>
             `
-            );
-  } 
+        );
+    }
 }
 
-function sendMessage(event){
-   console.log( 'in sendMessage' );
-   event.preventDefault(); // tied to the "form" element
-   
-   let objectToSend = {
-       user: $( '#nameIn' ).val(),
-       message: $( '#messageIn' ).val()
-   };
+function sendMessage(event) {
+    console.log('in sendMessage');
+    event.preventDefault();
 
-   $.ajax({
-       method: 'POST',
-       url: '/messages',
-       data: objectToSend
-   }).then( function( response ){
-       $( '#nameIn' ).val('');
-       $( '#messageIn' ).val('');
-       getMessages();
-   }).catch( function( err ){
-       alert( 'Error sending message. Try again later.' );
-       console.log( err );
-   }) // end AJAX
+    let objectToSend = {
+        user: document.getElementById('nameIn').value,
+        message: document.getElementById('messageIn').value
+    };
+
+    axios({
+        method: 'POST',
+        url: '/messages',
+        data: objectToSend
+    }).then(function (response) {
+        document.getElementById('nameIn').value = ''
+        document.getElementById('messageIn').value = ''
+        getMessages();
+    }).catch(function (err) {
+        alert('Error sending message. Try again later.');
+        console.log(err);
+    }) // end AJAX
 }
- 
+
 // stretch goal in Weekend Challenge
-function deleteMessage(){
-   let index = $( this ).data( 'index' );
-   $.ajax({
-       method: 'DELETE',
-       url: '/messages/' + index
-   }).then( function( response ){
-       getMessages();
-   }).catch( function( err ){
-       console.log( err );
-       alert( 'Unable to delete at this time. Try again later.' );
-   })
+function deleteMessage(event) {
+    event.preventDefault();
+    let index = event.target.dataset.index;
+    axios({
+        method: 'DELETE',
+        url: '/messages/' + index
+    }).then(function (response) {
+        getMessages();
+    }).catch(function (err) {
+        console.log(err);
+        alert('Unable to delete at this time. Try again later.');
+    })
 }

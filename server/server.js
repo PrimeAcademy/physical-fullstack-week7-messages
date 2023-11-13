@@ -5,7 +5,7 @@ const app = express();
 const bodyParser = require('body-parser');
 
 app.use(express.static('server/public'));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 let messages = []; //empty array for data
 
@@ -41,6 +41,7 @@ app.delete( '/messages/:index', ( req, res )=>{
    console.log( 'in /messages delete:', req.params.index );
    
    // remove this item from the messages array
+   messages.splice( req.params.index, 1 );
 
    res.sendStatus( 200 );
 }) 
