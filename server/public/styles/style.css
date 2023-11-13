@@ -2,3 +2,17 @@ body {
   width: 90%;
   margin: auto;
 }
+
+/* li elements will have a box around them */
+li {
+  border: 1px solid black;
+  display: block;
+  width: fit-content;
+  padding: 5px; /* Adjust as needed */
+  margin: 5px; /* Adjust as needed */
+}
+
+div {
+  padding-left: 20px;
+  font-style: italic;
+}
