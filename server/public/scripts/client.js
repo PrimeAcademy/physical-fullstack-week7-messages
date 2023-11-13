@@ -35,7 +35,7 @@ function render() {
 
 function sendMessage(event) {
     console.log('in sendMessage');
-    event.preventDefault(); // tied to the "form" element
+    event.preventDefault();
 
     let objectToSend = {
         user: document.getElementById('nameIn').value,
