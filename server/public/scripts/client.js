@@ -5,11 +5,11 @@ let messages = [];
 getMessages();
 
 function getMessages() {
-    $.ajax({
+    axios({
         method: 'GET',
         url: '/messages'
     }).then(function (response) {
-        messages = response; // set state
+        messages = response.data; // set state
         render();
     }).catch(function (err) {
         alert('Unable to get messages. Try again later.');
@@ -42,7 +42,7 @@ function sendMessage(event) {
         message: document.getElementById('messageIn').value
     };
 
-    $.ajax({
+    axios({
         method: 'POST',
         url: '/messages',
         data: objectToSend
@@ -60,7 +60,7 @@ function sendMessage(event) {
 function deleteMessage(event) {
     event.preventDefault();
     let index = event.target.dataset.index;
-    $.ajax({
+    axios({
         method: 'DELETE',
         url: '/messages/' + index
     }).then(function (response) {
