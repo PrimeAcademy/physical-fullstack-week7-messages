@@ -2,13 +2,19 @@
 
 
 let messages = [];
+
+
 getMessages();
 
+
 function getMessages() {
+    console.log('making GET Request', messages);
     axios({
         method: 'GET',
         url: '/messages'
     }).then(function (response) {
+        console.log('making GET response', response.data);
+
         messages = response.data; // set state
         render();
     }).catch(function (err) {
@@ -17,6 +23,8 @@ function getMessages() {
     })
 }
 
+
+
 function render() {
     let el = document.getElementById('messagesOut');
     el.innerHTML = '';
@@ -24,7 +32,7 @@ function render() {
     for (let i = 0; i < messages.length; i++) {
         let item = messages[i];
         el.innerHTML += (`
-            <li class="messageLine" data-index="${i}" onclick=(deleteMessage(event))>
+            <li  class="messageLine red" data-index="${i}" onclick=(deleteMessage(event))>
                 <b>${item.user}</b>:
                 <div>"${item.message}"</div>
             </li>
@@ -32,6 +40,10 @@ function render() {
         );
     }
 }
+
+
+
+
 
 function sendMessage(event) {
     console.log('in sendMessage');
@@ -56,17 +68,3 @@ function sendMessage(event) {
     }) // end AJAX
 }
 
-// stretch goal in Weekend Challenge
-function deleteMessage(event) {
-    event.preventDefault();
-    let index = event.target.dataset.index;
-    axios({
-        method: 'DELETE',
-        url: '/messages/' + index
-    }).then(function (response) {
-        getMessages();
-    }).catch(function (err) {
-        console.log(err);
-        alert('Unable to delete at this time. Try again later.');
-    })
-}

@@ -3,6 +3,10 @@ body {
   margin: auto;
 }
 
+.red {
+  color: rebeccapurple;
+}
+
 /* li elements will have a box around them */
 li {
   border: 1px solid black;
