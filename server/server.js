@@ -2,10 +2,9 @@
 
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 
 app.use(express.static('server/public'));
-app.use(bodyParser.json());
+app.use(express.json());
 
 let messages = []; //empty array for data
 
