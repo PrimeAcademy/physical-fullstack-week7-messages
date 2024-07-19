@@ -35,12 +35,3 @@ app.post('/messages', (req, res) => {
 });
 
 
-// delete is a stetch goal!
-app.delete( '/messages/:index', ( req, res )=>{
-   console.log( 'in /messages delete:', req.params.index );
-   
-   // remove this item from the messages array
-   messages.splice( req.params.index, 1 );
-
-   res.sendStatus( 200 );
-}) 
